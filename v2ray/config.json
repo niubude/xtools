@@ -1,34 +1,40 @@
 {
-    "log" : {
-      "access": "/etc/v2ray/access.log",
-      "error": "/etc/v2ray/error.log",
-      "loglevel": "warning"
+  "log" : {
+    "access": "/etc/v2ray/access.log",
+    "error": "/etc/v2ray/error.log",
+    "loglevel": "warning"
+  },
+"inbounds": [
+  {
+    "port": 443,
+    "protocol": "vmess",    
+    "settings": {
+      "clients": [
+        {
+          "id": "60ca58e9-003e-4c01-98de-c2223ae49153",
+          "level": 1,  
+          "alterId": 64
+        }
+      ]
     },
-    "inbounds": [{
-      "port": 8888,
-      "protocol": "vmess",
-      "settings": {
-        "clients": [
+    "streamSettings": {
+      "network": "tcp",
+      "security": "tls",
+      "tlsSettings": {
+        "certificates": [
           {
-            "id": "60ca58e9-003e-4c01-98de-c2223ae49153",
-            "level": 1,
-            "alterId": 64
+            "certificateFile": "/etc/v2ray/v2ray.crt",
+            "keyFile": "/etc/v2ray/v2ray.key"
           }
         ]
-      },
-      "streamSettings": {
-          "wsSettings": {
-            "path": "/ws",
-            "headers": {
-              "Host": "github.com"
-            }
-          },
-          "network": "ws"
       }
-    }],
-    "outbounds": [{
-      "protocol": "freedom",
-      "settings": {}
-    }]
+    }
   }
-  
+],
+"outbounds": [
+  {
+    "protocol": "freedom",
+    "settings": {}
+  }
+]
+}

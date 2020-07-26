@@ -9,7 +9,9 @@ mkdir /root/v2ray
 mkdir /root/nginx
 docker run --name nginx -p 80:80 -v /root/nginx:/usr/share/nginx/html:ro -d nginx
 curl https://get.acme.sh | sh
-source ~/.bashrc 
+alias acme.sh=~/.acme.sh/acme.sh
+echo 'alias acme.sh=~/.acme.sh/acme.sh' >>/etc/profile
+00 00 * * * root /root/.acme.sh/acme.sh --cron --home /root/.acme.sh &>/var/log/acme.sh.logs
 acme.sh --issue -d pp.avps.ml --webroot /root/nginx
 acme.sh --install-cert -d pp.avps.ml \
 --key-file /root/v2ray/v2ray.key \

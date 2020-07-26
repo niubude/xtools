@@ -5,5 +5,16 @@
 wget -qO- https://get.docker.com/ | sh
 systemctl start docker
 mkdir /root/v2ray
+
+mkdir /root/nginx
+docker run --name nginx -p 80:80 -v /root/nginx:/usr/share/nginx/html:ro -d nginx
+curl https://get.acme.sh | sh
+source ~/.bashrc 
+acme.sh --issue -d pp.avps.ml --webroot /root/nginx
+acme.sh --install-cert -d pp.avps.ml \
+--key-file /root/v2ray/v2ray.key \
+--fullchain-file /root/v2ray/v2ray.crt \
+--reloadcmd      "docker restart nginx"
+
 wget -O /root/v2ray/config.json https://raw.githubusercontent.com/niubude/xtools/master/v2ray/config.json
 docker run --name=v2ray --net=host -v /root/v2ray:/etc/v2ray -d v2ray/official
